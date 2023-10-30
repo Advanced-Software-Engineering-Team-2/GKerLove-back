@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: GKerLove
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      username: gkers
+      password: gkers111666
+      config:
+        file-extension: yaml
+        namespace: d833027c-d49d-46f9-9b9e-17512a6c30f6
