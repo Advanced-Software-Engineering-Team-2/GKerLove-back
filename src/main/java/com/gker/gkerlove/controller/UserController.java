@@ -21,6 +21,7 @@ import com.alibaba.fastjson.JSONObject;
 public class UserController {
     @Resource
     UserService userService;
+    @Resource
     ImService imService;
     @Operation(description = "登录")
     @PostMapping("login")
@@ -41,15 +42,16 @@ public class UserController {
         if (!captcha.equalsIgnoreCase(sessionCaptcha)) {
             throw new GKerLoveException("验证码错误");
         }
-        httpSession.removeAttribute("captcha");
-        userService.register(user, code);
-        //在im中也注册一个用户
         String s = imService.Imregister(user);
         JSONObject parse =(JSONObject) JSONObject.parse(s);
         String r = parse.getString("ActionStatus");
         if(!r.equals("OK")){
             throw new GKerLoveException("im系统注册失败，错误信息："+parse.getString("ErrorInfo"));
         }
+        httpSession.removeAttribute("captcha");
+        userService.register(user, code);
+        //在im中也注册一个用户
+
         return R.ok().message("注册成功");
     }
 
