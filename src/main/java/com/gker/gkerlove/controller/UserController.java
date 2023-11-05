@@ -46,7 +46,7 @@ public class UserController {
         JSONObject parse =(JSONObject) JSONObject.parse(s);
         String r = parse.getString("ActionStatus");
         if(!r.equals("OK")){
-            throw new GKerLoveException("im系统注册失败，错误信息："+parse.getString("ErrorInfo"));
+            throw new GKerLoveException("im系统注册失败,错误信息:"+parse.getString("ErrorInfo"));
         }
         httpSession.removeAttribute("captcha");
         userService.register(user, code);
