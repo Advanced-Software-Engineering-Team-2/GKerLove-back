@@ -48,6 +48,12 @@ public class UserController {
         if(!r.equals("OK")){
             throw new GKerLoveException("im系统注册失败,错误信息:"+parse.getString("ErrorInfo"));
         }
+        String s1 = imService.CreateFriendGroup(user.getUsername());
+        JSONObject parse1 =(JSONObject) JSONObject.parse(s1);
+        String r1 = parse1.getString("ActionStatus");
+        if(!r1.equals("OK")){
+            throw new GKerLoveException("好友分类初始化失败,错误信息:"+parse.getString("ErrorInfo"));
+        }
         httpSession.removeAttribute("captcha");
         userService.register(user, code);
         //在im中也注册一个用户

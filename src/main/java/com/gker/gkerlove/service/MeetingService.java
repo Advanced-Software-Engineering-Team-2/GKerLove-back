@@ -27,7 +27,6 @@ public class MeetingService {
         frienditem.put("AddWording","我将你列为了我喜欢的人，如果对我的个人信息感兴趣的话，就将我添加为好友开始聊天吧！");
         frienditems.add(frienditem);
         param.put("AddFriendItem",frienditems);
-
         return HttpUtils.sendPost(url, param.toJSONString());
     }
 }
