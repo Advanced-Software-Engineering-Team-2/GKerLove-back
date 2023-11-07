@@ -56,7 +56,6 @@ public class UserController {
         }
         httpSession.removeAttribute("captcha");
         userService.register(user, code);
-        //在im中也注册一个用户
 
         return R.ok().message("注册成功");
     }

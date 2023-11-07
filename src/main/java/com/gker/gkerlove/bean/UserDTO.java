@@ -14,4 +14,5 @@ public class UserDTO {
 
     @Schema(description = "邮箱地址")
     private String email;
+
 }
