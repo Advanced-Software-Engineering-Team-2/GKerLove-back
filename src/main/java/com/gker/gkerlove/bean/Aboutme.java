@@ -23,7 +23,7 @@ public class Aboutme {
     @Schema(description = "用户年龄")
     private String age;
 
-    @Schema(description = "常驻城市")
+    @Schema(description = "常住城市")
     private String city;
 
     @Schema(description = "培养单位")

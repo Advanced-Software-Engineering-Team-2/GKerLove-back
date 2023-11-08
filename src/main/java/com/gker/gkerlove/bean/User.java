@@ -18,6 +18,5 @@ public class User extends UserDTO {
     @Schema(description = "创建时间")
     private LocalDateTime createTime;
 
-    @Schema(description = "是否填写aboutme信息")
-    private Boolean hasaboutme;
+
 }

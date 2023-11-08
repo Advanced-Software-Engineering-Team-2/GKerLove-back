@@ -15,4 +15,6 @@ public class UserDTO {
     @Schema(description = "邮箱地址")
     private String email;
 
+    @Schema(description = "是否填写aboutme信息")
+    private Boolean hasaboutme;
 }
