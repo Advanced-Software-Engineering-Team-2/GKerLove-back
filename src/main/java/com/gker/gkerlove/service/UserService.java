@@ -28,6 +28,8 @@ public class UserService {
     public String login(User user) {
         String username = user.getUsername();
         String password = user.getPassword();
+        if (username.length() < 4 || username.length() > 20) throw new GKerLoveException("用户名长度必须在4-20之间");
+        if (password.length() < 6 || password.length() > 50) throw new GKerLoveException("密码长度必须在6-50之间");
         Query query = new Query(Criteria.where("username").is(username));
         User userDetails = mongoTemplate.findOne(query, User.class);
         if (userDetails == null) throw new GKerLoveException("用户名或密码错误");
@@ -37,12 +39,17 @@ public class UserService {
     }
 
     public void register(User user, String code) {
-        Query query = new Query(Criteria.where("username").is(user.getUsername()));
+        String username = user.getUsername();
+        String password = user.getPassword();
+        String email = user.getEmail();
+        if (username.length() < 4 || username.length() > 20) throw new GKerLoveException("用户名长度必须在4-20之间");
+        if (password.length() < 6 || password.length() > 50) throw new GKerLoveException("密码长度必须在6-50之间");
+        if (email.length() > 50) throw new GKerLoveException("邮箱长度不能大于50");
+        Query query = new Query(Criteria.where("username").is(username));
         long count = mongoTemplate.count(query, User.class);
         if (count >= 1) throw new GKerLoveException("用户名重复");
-        String email = user.getEmail();
         codeService.checkCode(email, code);
-        user.setPassword(MD5Util.encrypt(user.getPassword()));
+        user.setPassword(MD5Util.encrypt(password));
         user.setId(String.valueOf(UUID.randomUUID()));
         user.setCreateTime(LocalDateTime.now());
         mongoTemplate.save(user, "users");

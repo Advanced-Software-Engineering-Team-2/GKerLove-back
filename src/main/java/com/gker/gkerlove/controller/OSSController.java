@@ -18,7 +18,7 @@ import java.io.IOException;
 
 
 @RestController
-@RequestMapping("/oss")
+@RequestMapping("/OSS")
 @Tag(name = "OSS相关接口")
 @Login
 public class OSSController {

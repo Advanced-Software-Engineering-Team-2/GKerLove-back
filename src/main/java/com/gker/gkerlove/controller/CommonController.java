@@ -1,6 +1,7 @@
 package com.gker.gkerlove.controller;
 
 import com.gker.gkerlove.bean.R;
+import com.gker.gkerlove.exception.GKerLoveException;
 import com.gker.gkerlove.service.CodeService;
 import com.gker.gkerlove.util.CaptchaUtil;
 import com.gker.gkerlove.util.RandomUtil;
@@ -27,6 +28,7 @@ public class CommonController {
     @Operation(description = "发送邮箱验证码")
     @GetMapping("code")
     public R registerSendCode(String email) {
+        if (email.length() > 50) throw new GKerLoveException("邮箱长度不能大于50");
         codeService.sendCode(email);
         return R.ok().message("发送成功");
     }
