@@ -13,4 +13,9 @@ public class UserDto {
     String email;
     @Schema(description = "用户信息")
     User.UserInfo info;
+    @Schema(description = "人气")
+    Integer likedBy;
+    @Schema(description = "喜欢")
+    Integer likes;
+
 }

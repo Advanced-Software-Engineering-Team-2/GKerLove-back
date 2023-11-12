@@ -26,9 +26,6 @@ public class CommonController {
     @Resource
     CodeService codeService;
 
-    @Resource
-    MongoTemplate mongoTemplate;
-
     @Operation(description = "发送邮箱验证码")
     @GetMapping("code")
 

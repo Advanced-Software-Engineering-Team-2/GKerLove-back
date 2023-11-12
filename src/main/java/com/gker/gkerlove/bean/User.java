@@ -49,4 +49,10 @@ public class User {
         @Schema(description = "自我介绍")
         private String introduction;
     }
+
+    @Schema(description = "人气")
+    Integer likedBy;
+    @Schema(description = "喜欢")
+    Integer likes;
+
 }

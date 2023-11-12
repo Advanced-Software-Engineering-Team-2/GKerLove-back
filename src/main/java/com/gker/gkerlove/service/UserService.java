@@ -8,7 +8,6 @@ import com.gker.gkerlove.exception.GKerLoveException;
 import com.gker.gkerlove.util.JwtUtils;
 import com.gker.gkerlove.util.MD5Util;
 import jakarta.annotation.Resource;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -52,11 +51,14 @@ public class UserService {
         if (count >= 1) throw new GKerLoveException("邮箱已被注册");
         codeService.checkCode(email, code);
         User user = new User();
+        // 对用户进行一些初始化
         user.setId(String.valueOf(UUID.randomUUID()));
         user.setUsername(username);
         user.setPassword(MD5Util.encrypt(password));
         user.setEmail(email);
         user.setCreateTime(LocalDateTime.now());
+        user.setLikes(0);
+        user.setLikedBy(0);
         mongoTemplate.save(user);
     }
 
