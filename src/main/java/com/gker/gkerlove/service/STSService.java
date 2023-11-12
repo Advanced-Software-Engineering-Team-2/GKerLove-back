@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class OSSService {
+public class STSService {
     @Value("${OSS.accessKeyId}")
     private String accessKeyId;
     @Value("${OSS.accessKeySecret}")
