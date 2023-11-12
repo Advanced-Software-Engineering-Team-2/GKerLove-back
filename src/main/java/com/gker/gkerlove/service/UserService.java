@@ -1,8 +1,9 @@
 package com.gker.gkerlove.service;
 
-import com.gker.gkerlove.bean.Page;
+import com.gker.gkerlove.bean.common.Page;
 import com.gker.gkerlove.bean.User;
-import com.gker.gkerlove.bean.UserDTO;
+import com.gker.gkerlove.constants.CityConstants;
+import com.gker.gkerlove.constants.InstituteConstants;
 import com.gker.gkerlove.exception.GKerLoveException;
 import com.gker.gkerlove.util.JwtUtils;
 import com.gker.gkerlove.util.MD5Util;
@@ -25,42 +26,42 @@ public class UserService {
     @Resource
     CodeService codeService;
 
-    public String login(User user) {
-        String username = user.getUsername();
-        String password = user.getPassword();
+    public String login(String username, String password) {
+        if (username == null || password == null) throw new GKerLoveException("用户名、密码不能为空");
+        // 长度校验
         if (username.length() < 4 || username.length() > 20) throw new GKerLoveException("用户名长度必须在4-20之间");
         if (password.length() < 6 || password.length() > 50) throw new GKerLoveException("密码长度必须在6-50之间");
         Query query = new Query(Criteria.where("username").is(username));
-        User userDetails = mongoTemplate.findOne(query, User.class);
-        if (userDetails == null) throw new GKerLoveException("用户名或密码错误");
-        if (!MD5Util.encrypt(password).equals(userDetails.getPassword()))
-            throw new GKerLoveException("用户名或密码错误");
-        return JwtUtils.getToken(userDetails);
+        User user = mongoTemplate.findOne(query, User.class);
+        if (user == null) throw new GKerLoveException("用户名或密码错误");
+        if (!MD5Util.encrypt(password).equals(user.getPassword())) throw new GKerLoveException("用户名或密码错误");
+        return JwtUtils.getToken(user);
     }
 
-    public void register(User user, String code) {
-        String username = user.getUsername();
-        String password = user.getPassword();
-        String email = user.getEmail();
+    public void register(String username, String password, String email, String code) {
+        if (username == null || password == null || email == null) {
+            throw new GKerLoveException("用户名、密码、邮箱不能为空");
+        }
+        // 长度校验
         if (username.length() < 4 || username.length() > 20) throw new GKerLoveException("用户名长度必须在4-20之间");
         if (password.length() < 6 || password.length() > 50) throw new GKerLoveException("密码长度必须在6-50之间");
         if (email.length() > 50) throw new GKerLoveException("邮箱长度不能大于50");
-        Query query = new Query(Criteria.where("username").is(username));
-        long count = mongoTemplate.count(query, User.class);
+        long count = mongoTemplate.count(new Query(Criteria.where("username").is(username)), User.class);
         if (count >= 1) throw new GKerLoveException("用户名重复");
+        count = mongoTemplate.count(new Query(Criteria.where("email").is(email)), User.class);
+        if (count >= 1) throw new GKerLoveException("邮箱已被注册");
         codeService.checkCode(email, code);
-        user.setPassword(MD5Util.encrypt(password));
+        User user = new User();
         user.setId(String.valueOf(UUID.randomUUID()));
+        user.setUsername(username);
+        user.setPassword(MD5Util.encrypt(password));
+        user.setEmail(email);
         user.setCreateTime(LocalDateTime.now());
-        mongoTemplate.save(user, "users");
+        mongoTemplate.save(user);
     }
 
-    public UserDTO getById(String id) {
-        User user = mongoTemplate.findOne(new Query(Criteria.where("_id").is(id)), User.class);
-        assert user != null;
-        UserDTO UserDTO = new UserDTO();
-        BeanUtils.copyProperties(user, UserDTO);
-        return UserDTO;
+    public User getById(String id) {
+        return mongoTemplate.findOne(new Query(Criteria.where("_id").is(id)), User.class);
     }
 
     public Page<User> retrieve(Integer pageNumber, Integer pageSize) {
@@ -74,7 +75,28 @@ public class UserService {
         return new Page<>(total, userList);
     }
 
-    public void update(User user) {
+    public void updateInfo(User user, User.UserInfo info) {
+        // 性别校验
+        if (info.getGender() != null && !info.getGender().equals("男") && !info.getGender().equals("女"))
+            throw new GKerLoveException("性别错误");
+        // 年龄
+        if (info.getAge() != null && (info.getAge() < 0 || info.getAge() > 200))
+            throw new GKerLoveException("年龄错误");
+        // 城市
+        if (info.getCity() != null) {
+            if (info.getCity().length() > 20) throw new GKerLoveException("城市错误");
+            if (!CityConstants.CITIES.contains(info.getCity())) throw new GKerLoveException("城市错误");
+        }
+        // 培养单位
+        if (info.getInstitute() != null) {
+            if (info.getInstitute().length() > 20) throw new GKerLoveException("培养单位错误");
+            if (!InstituteConstants.INSTITUTES.contains(info.getInstitute()))
+                throw new GKerLoveException("培养单位错误");
+        }
+        // 自我介绍
+        if (info.getIntroduction() != null && info.getIntroduction().length() > 50)
+            throw new GKerLoveException("自我介绍长度不能超过50");
+        user.setInfo(info);
         mongoTemplate.save(user);
     }
 

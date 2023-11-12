@@ -1,4 +1,4 @@
-package com.gker.gkerlove.bean;
+package com.gker.gkerlove.bean.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package com.gker.gkerlove.controller;
 
-import com.gker.gkerlove.bean.R;
+import com.gker.gkerlove.bean.common.R;
 import com.gker.gkerlove.exception.GKerLoveException;
 import com.gker.gkerlove.service.CodeService;
 import com.gker.gkerlove.util.CaptchaUtil;
@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,8 +26,12 @@ public class CommonController {
     @Resource
     CodeService codeService;
 
+    @Resource
+    MongoTemplate mongoTemplate;
+
     @Operation(description = "发送邮箱验证码")
     @GetMapping("code")
+
     public R registerSendCode(String email) {
         if (email.length() > 50) throw new GKerLoveException("邮箱长度不能大于50");
         codeService.sendCode(email);

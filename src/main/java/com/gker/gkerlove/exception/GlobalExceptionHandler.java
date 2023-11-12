@@ -1,6 +1,6 @@
 package com.gker.gkerlove.exception;
 
-import com.gker.gkerlove.bean.R;
+import com.gker.gkerlove.bean.common.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

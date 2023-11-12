@@ -1,7 +1,7 @@
 package com.gker.gkerlove.interceptor;
 
-import com.gker.gkerlove.bean.R;
-import com.gker.gkerlove.bean.UserDTO;
+import com.gker.gkerlove.bean.common.R;
+import com.gker.gkerlove.bean.User;
 import com.gker.gkerlove.resolver.CurrentUser;
 import com.gker.gkerlove.service.UserService;
 import com.gker.gkerlove.util.JwtUtils;
@@ -36,7 +36,6 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         Method method = handlerMethod.getMethod();
         Class<?> declaringClass = method.getDeclaringClass();
 
-        UserDTO UserDTO = null;
 
         // 需要登录权限
         if (declaringClass.isAnnotationPresent(Login.class) || method.isAnnotationPresent(Login.class)) {
@@ -56,9 +55,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         for (Annotation[] annotations : parameterAnnotations) {
             for (Annotation annotation : annotations) {
                 if (annotation.annotationType() == CurrentUser.class) {
-                    UserDTO = userService.getById(JwtUtils.getUserId(token));
-                    // 将用户数据放入request中
-                    request.setAttribute("user", UserDTO);
+                    User user = userService.getById(JwtUtils.getUserId(token));
+                    request.setAttribute("user", user);
                     return true;
                 }
             }

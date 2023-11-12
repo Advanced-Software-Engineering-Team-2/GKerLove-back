@@ -1,7 +1,7 @@
 package com.gker.gkerlove.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gker.gkerlove.bean.R;
+import com.gker.gkerlove.bean.common.R;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
