@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -79,24 +80,25 @@ public class UserService {
 
     public void updateInfo(User user, User.UserInfo info) {
         // 性别校验
-        if (info.getGender() != null && !info.getGender().equals("男") && !info.getGender().equals("女"))
+        if (StringUtils.hasLength(info.getGender()) && !info.getGender().equals("男") && !info.getGender().equals("女"))
             throw new GKerLoveException("性别错误");
         // 年龄
         if (info.getAge() != null && (info.getAge() < 0 || info.getAge() > 200))
             throw new GKerLoveException("年龄错误");
         // 城市
-        if (info.getCity() != null) {
+        if (StringUtils.hasLength(info.getCity())) {
+            System.out.println(info.getCity());
             if (info.getCity().length() > 20) throw new GKerLoveException("城市错误");
             if (!CityConstants.CITIES.contains(info.getCity())) throw new GKerLoveException("城市错误");
         }
         // 培养单位
-        if (info.getInstitute() != null) {
+        if (StringUtils.hasLength(info.getInstitute())) {
             if (info.getInstitute().length() > 20) throw new GKerLoveException("培养单位错误");
             if (!InstituteConstants.INSTITUTES.contains(info.getInstitute()))
                 throw new GKerLoveException("培养单位错误");
         }
         // 自我介绍
-        if (info.getIntroduction() != null && info.getIntroduction().length() > 50)
+        if (StringUtils.hasLength(info.getIntroduction()) && info.getIntroduction().length() > 50)
             throw new GKerLoveException("自我介绍长度不能超过50");
         user.setInfo(info);
         mongoTemplate.save(user);
