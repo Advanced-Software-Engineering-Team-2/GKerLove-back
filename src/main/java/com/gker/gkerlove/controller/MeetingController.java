@@ -21,12 +21,13 @@ public class MeetingController {
 
     @Operation(description = "获取遇见列表")
     @GetMapping("getlist")
-    public List<User> getlist(@RequestParam(required = false)String gender,
+    public List<User> getlist(   @RequestParam String tousername,
+                                 @RequestParam(required = false)String gender,
                                  @RequestParam(required = false)Integer min_age,
                                  @RequestParam(required = false)Integer max_age,
                                  @RequestParam(required = false)String city,
                                  @RequestParam(required = false)String institute) {
-        return meetingService.MeetingGetlist(gender, min_age, max_age, city, institute);
+        return meetingService.MeetingGetlist(tousername, gender, min_age, max_age, city, institute);
     }
 
     @Operation(description = "发送喜欢请求")

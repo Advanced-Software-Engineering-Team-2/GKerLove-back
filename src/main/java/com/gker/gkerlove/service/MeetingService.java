@@ -20,8 +20,9 @@ public class MeetingService {
     @Resource
     MongoTemplate mongoTemplate;
 
-    public List<User> MeetingGetlist(String gender, Integer min_age, Integer max_age, String city, String institute){
+    public List<User> MeetingGetlist(String tousername, String gender, Integer min_age, Integer max_age, String city, String institute){
         Query query = new Query();
+        query.addCriteria(Criteria.where("username").ne(tousername));
         if (gender != null) {
             query.addCriteria(Criteria.where("info.gender").is(gender));
         }
