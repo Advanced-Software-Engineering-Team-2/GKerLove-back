@@ -19,6 +19,27 @@ import java.util.List;
 public class MeetingService {
     @Resource
     MongoTemplate mongoTemplate;
+
+    public List<User> MeetingGetlist(String gender, Integer min_age, Integer max_age, String city, String institute){
+        Query query = new Query();
+        if (gender != null) {
+            query.addCriteria(Criteria.where("info.gender").is(gender));
+        }
+        if (min_age != null) {
+            query.addCriteria(Criteria.where("info.age").gte(min_age));
+        }
+        if (max_age != null) {
+            query.addCriteria(Criteria.where("info.age").lte(max_age));
+        }
+        if (city != null) {
+            query.addCriteria(Criteria.where("info.city").is(city));
+        }
+        if (institute != null) {
+            query.addCriteria(Criteria.where("info.institute").is(institute));
+        }
+        return mongoTemplate.find(query, User.class);
+    }
+
     public String MeetingAddlover(String formusername,String tousername) {
         TLSSigAPIv2 api = new TLSSigAPIv2(1600009914, "d82b484df8d55fc6077400a56a4a42a5ef7ce2a53ee05777e7b416f6ee6d0c79");
         String Sig = api.genUserSig("administrator", 60);
