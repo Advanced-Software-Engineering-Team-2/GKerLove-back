@@ -5,8 +5,6 @@ import com.gker.gkerlove.bean.User;
 import com.gker.gkerlove.bean.common.R;
 import com.gker.gkerlove.bean.response.UserDto;
 import com.gker.gkerlove.exception.GKerLoveException;
-import com.gker.gkerlove.interceptor.Login;
-import com.gker.gkerlove.resolver.CurrentUser;
 import com.gker.gkerlove.service.MeetingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
