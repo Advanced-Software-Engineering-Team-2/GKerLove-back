@@ -24,14 +24,14 @@ public class MeetingController {
 
     @Operation(description = "获取遇见列表")
     @GetMapping("getlist")
-    public R getlist( @RequestParam String tousername,
+    public R getlist( @RequestParam String fromusername,
                       @RequestParam(required = false)String gender,
                       @RequestParam(required = false)Integer min_age,
                       @RequestParam(required = false)Integer max_age,
                       @RequestParam(required = false)String city,
                       @RequestParam(required = false)String institute) {
         List<UserDto> meetinglist = new ArrayList<>();
-        List<User> userlists = meetingService.MeetingGetlist(tousername, gender, min_age, max_age, city, institute);
+        List<User> userlists = meetingService.MeetingGetlist(fromusername, gender, min_age, max_age, city, institute);
         for (User user : userlists) {
             UserDto userDto = new UserDto();
             BeanUtils.copyProperties(user, userDto);
