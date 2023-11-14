@@ -23,19 +23,19 @@ public class MeetingService {
     public List<User> MeetingGetlist(String fromusername, String gender, Integer min_age, Integer max_age, String city, String institute){
         Query query = new Query();
         query.addCriteria(Criteria.where("username").ne(fromusername));
-        if (gender != null) {
+        if (!gender.isEmpty()) {
             query.addCriteria(Criteria.where("info.gender").is(gender));
         }
-        if (min_age != null) {
+        if (min_age != 0) {
             query.addCriteria(Criteria.where("info.age").gte(min_age));
         }
-        if (max_age != null) {
+        if (max_age != 0) {
             query.addCriteria(Criteria.where("info.age").lte(max_age));
         }
-        if (city != null) {
+        if (!city.isEmpty()) {
             query.addCriteria(Criteria.where("info.city").is(city));
         }
-        if (institute != null) {
+        if (!institute.isEmpty()) {
             query.addCriteria(Criteria.where("info.institute").is(institute));
         }
         return mongoTemplate.find(query, User.class);
