@@ -59,7 +59,7 @@ public class MeetingService {
 
         Query query = new Query(Criteria.where("username").is(tousername));
         User touser = mongoTemplate.findOne(query, User.class);
-        Integer liked_num = null;
+        Integer liked_num;
         if (touser != null) {
             liked_num = touser.getLikedBy() + 1;
         }
@@ -70,8 +70,8 @@ public class MeetingService {
         mongoTemplate.updateFirst(query,update, "users");
 
         Query query1 = new Query(Criteria.where("username").is(formusername));
-        User fromuser = mongoTemplate.findOne(query, User.class);
-        Integer like_num = null;
+        User fromuser = mongoTemplate.findOne(query1, User.class);
+        Integer like_num;
         if (fromuser != null) {
             like_num = fromuser.getLikes() + 1;
         }
