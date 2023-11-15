@@ -46,6 +46,7 @@ public class MeetingController {
     @PostMapping("addlove")
     public R addlove(@RequestParam String fromusername,@RequestParam String tousername) {
         String s = meetingService.MeetingAddlover(fromusername, tousername);
+        meetingService.MeetingNotlove(fromusername, tousername);
         JSONObject parse =(JSONObject) JSONObject.parse(s);
         String r = parse.getString("ActionStatus");
         if(!r.equals("OK")){
@@ -53,4 +54,12 @@ public class MeetingController {
         }
         return R.ok().message("已发送喜欢请求");
     }
+
+    @Operation(description = "发送不喜欢请求")
+    @PostMapping("notlove")
+    public R notlove(@RequestParam String fromusername,@RequestParam String tousername) {
+        meetingService.MeetingNotlove(fromusername, tousername);
+        return R.ok().message("已不再推荐该用户");
+    }
+
 }

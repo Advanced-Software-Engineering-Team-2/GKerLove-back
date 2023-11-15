@@ -53,6 +53,9 @@ public class MeetingService {
                 }
             }
         }
+        else{
+            newuserlist = userlist;
+        }
         return newuserlist;
     }
 
@@ -83,15 +86,7 @@ public class MeetingService {
         }
         Update update = Update.update("liked_by",liked_num);
         mongoTemplate.updateFirst(query,update, "users");
-        List<String> touser_nomeetinglist = new ArrayList<>();
-        if (touser != null) {
-            touser_nomeetinglist = touser.getNomeetinglist();
-            if(touser_nomeetinglist == null)
-                touser_nomeetinglist = new ArrayList<>();
-        }
-        touser_nomeetinglist.add(fromusername);
-        Update update_nomeetinglist = Update.update("nomeetinglist",touser_nomeetinglist);
-        mongoTemplate.updateFirst(query,update_nomeetinglist, "users");
+
 
 
         Query query1 = new Query(Criteria.where("username").is(fromusername));
@@ -105,6 +100,27 @@ public class MeetingService {
         }
         Update update1 = Update.update("likes",like_num);
         mongoTemplate.updateFirst(query1,update1, "users");
+
+
+        return HttpUtils.sendPost(url, param.toJSONString());
+    }
+
+    public void MeetingNotlove(String fromusername,String tousername) {
+        Query query = new Query(Criteria.where("username").is(tousername));
+        User touser = mongoTemplate.findOne(query, User.class);
+        List<String> touser_nomeetinglist = new ArrayList<>();
+        if (touser != null) {
+            touser_nomeetinglist = touser.getNomeetinglist();
+            if(touser_nomeetinglist == null)
+                touser_nomeetinglist = new ArrayList<>();
+        }
+        touser_nomeetinglist.add(fromusername);
+        Update update_nomeetinglist = Update.update("nomeetinglist",touser_nomeetinglist);
+        mongoTemplate.updateFirst(query,update_nomeetinglist, "users");
+
+
+        Query query1 = new Query(Criteria.where("username").is(fromusername));
+        User fromuser = mongoTemplate.findOne(query1, User.class);
         List<String> fromuser_nomeetinglist = new ArrayList<>();
         if (fromuser != null) {
             fromuser_nomeetinglist = fromuser.getNomeetinglist();
@@ -114,7 +130,5 @@ public class MeetingService {
         fromuser_nomeetinglist.add(tousername);
         Update update_nomeetinglist1 = Update.update("nomeetinglist",fromuser_nomeetinglist);
         mongoTemplate.updateFirst(query1,update_nomeetinglist1, "users");
-
-        return HttpUtils.sendPost(url, param.toJSONString());
     }
 }
