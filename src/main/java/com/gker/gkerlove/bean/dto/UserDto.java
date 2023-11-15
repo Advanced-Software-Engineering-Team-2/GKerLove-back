@@ -1,4 +1,4 @@
-package com.gker.gkerlove.bean.response;
+package com.gker.gkerlove.bean.dto;
 
 import com.gker.gkerlove.bean.User;
 import io.swagger.v3.oas.annotations.media.Schema;

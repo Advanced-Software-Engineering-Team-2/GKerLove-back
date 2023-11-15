@@ -3,7 +3,7 @@ package com.gker.gkerlove.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.gker.gkerlove.bean.User;
 import com.gker.gkerlove.bean.common.R;
-import com.gker.gkerlove.bean.response.UserDto;
+import com.gker.gkerlove.bean.dto.UserDto;
 import com.gker.gkerlove.exception.GKerLoveException;
 import com.gker.gkerlove.service.MeetingService;
 import io.swagger.v3.oas.annotations.Operation;

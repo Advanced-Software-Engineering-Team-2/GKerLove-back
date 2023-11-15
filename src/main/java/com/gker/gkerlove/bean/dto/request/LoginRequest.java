@@ -1,4 +1,4 @@
-package com.gker.gkerlove.bean.request;
+package com.gker.gkerlove.bean.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
