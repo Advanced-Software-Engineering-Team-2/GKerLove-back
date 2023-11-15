@@ -5,6 +5,7 @@ import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Schema(description = "用户")
@@ -52,7 +53,11 @@ public class User {
 
     @Schema(description = "人气")
     Integer likedBy;
+
     @Schema(description = "喜欢")
     Integer likes;
+
+    @Schema(description = "不再被推荐给本人的用户列表")
+    List<String> nomeetinglist;
 
 }
