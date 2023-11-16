@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -25,7 +26,7 @@ public class PostDto {
     LocalDateTime time;
 
     @Schema(description = "评论列表")
-    List<Comment> commentList;
+    List<Comment> commentList = new ArrayList<>();
 
     @Data
     @Schema(description = "评论Dto")

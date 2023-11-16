@@ -9,6 +9,7 @@ import com.gker.gkerlove.exception.GKerLoveException;
 import com.gker.gkerlove.interceptor.Login;
 import com.gker.gkerlove.resolver.CurrentUser;
 import com.gker.gkerlove.service.ImService;
+import com.gker.gkerlove.service.PostService;
 import com.gker.gkerlove.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,6 +25,10 @@ import com.alibaba.fastjson.JSONObject;
 public class UserController {
     @Resource
     UserService userService;
+
+    @Resource
+    PostService postService;
+
     @Resource
     ImService imService;
 
@@ -76,8 +81,8 @@ public class UserController {
     @PutMapping("info")
     @Login
     public R updateInfo(@CurrentUser User user, @RequestBody User.UserInfo info) {
-        userService.updateInfo(user, info);
-        return R.ok().message("更新信息成功");
+        User.UserInfo userInfo = userService.updateInfo(user, info);
+        return R.ok().message("更新信息成功").data("info", userInfo);
     }
 }
 

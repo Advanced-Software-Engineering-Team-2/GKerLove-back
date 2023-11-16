@@ -7,7 +7,6 @@ import com.gker.gkerlove.bean.dto.PostDto;
 import com.gker.gkerlove.bean.dto.UserDto;
 import jakarta.annotation.Resource;
 import org.springframework.beans.BeanUtils;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -29,10 +28,9 @@ public class PostService {
 
     public void addPost(User user, PostDto postDto) {
         Post post = new Post();
+        BeanUtils.copyProperties(postDto, post);
         post.setId(UUID.randomUUID().toString());
         post.setUserId(user.getId());
-        post.setContent(postDto.getContent());
-        post.setImageList(postDto.getImageList());
         post.setTime(LocalDateTime.now());
         mongoTemplate.save(post);
     }
@@ -54,7 +52,7 @@ public class PostService {
             PostDto postDto = new PostDto();
             BeanUtils.copyProperties(post, postDto);
             UserDto postUserDto = new UserDto();
-            User postUser = userService.getById(post.getUserId());
+            User postUser = userService.getById(userId);
             BeanUtils.copyProperties(postUser, postUserDto);
             postDto.setUser(postUserDto);
             List<PostDto.Comment> commentDtoList = new ArrayList<>();

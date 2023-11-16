@@ -11,7 +11,7 @@ import java.util.List;
 @Schema(description = "用户")
 @Document("users")
 public class User {
-    @Schema(description = "用户ID")
+    @Schema(description = "用户id")
     private String id;
 
     @Schema(description = "用户名")

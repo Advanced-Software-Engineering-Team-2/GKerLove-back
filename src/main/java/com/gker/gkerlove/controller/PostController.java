@@ -1,6 +1,5 @@
 package com.gker.gkerlove.controller;
 
-import com.gker.gkerlove.bean.Post;
 import com.gker.gkerlove.bean.User;
 import com.gker.gkerlove.bean.common.R;
 import com.gker.gkerlove.bean.dto.PostDto;
@@ -27,9 +26,9 @@ public class PostController {
         return R.ok().message("发布成功");
     }
 
-    @Operation(description = "获取当前登录用户发布的动态")
-    @GetMapping("my")
-    public R getCurrentUserPostList(@CurrentUser User user, int pageNumber) {
-        return R.ok().data("postList", postService.retrieve(pageNumber, 5, user.getId()));
+    @Operation(description = "获取用户发布的动态")
+    @GetMapping("{id}")
+    public R getUserPostList(@PathVariable("id") String id) {
+        return R.ok().data("posts", postService.retrieve(null, null, id));
     }
 }

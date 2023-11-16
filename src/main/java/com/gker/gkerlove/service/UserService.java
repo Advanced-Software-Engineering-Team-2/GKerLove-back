@@ -78,7 +78,7 @@ public class UserService {
         return new Page<>(total, userList);
     }
 
-    public void updateInfo(User user, User.UserInfo info) {
+    public User.UserInfo updateInfo(User user, User.UserInfo info) {
         // 性别校验
         if (StringUtils.hasLength(info.getGender()) && !info.getGender().equals("男") && !info.getGender().equals("女"))
             throw new GKerLoveException("性别错误");
@@ -102,6 +102,7 @@ public class UserService {
             throw new GKerLoveException("自我介绍长度不能超过50");
         user.setInfo(info);
         mongoTemplate.save(user);
+        return info;
     }
 
 }

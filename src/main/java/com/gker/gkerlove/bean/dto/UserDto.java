@@ -7,6 +7,8 @@ import lombok.Data;
 @Data
 @Schema(description = "用户信息Dto")
 public class UserDto {
+    @Schema(description = "用户id")
+    String id;
     @Schema(description = "用户名")
     String username;
     @Schema(description = "邮箱")
