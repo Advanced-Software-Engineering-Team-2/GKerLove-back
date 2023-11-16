@@ -17,5 +17,4 @@ public class UserDto {
     Integer likedBy;
     @Schema(description = "喜欢")
     Integer likes;
-
 }

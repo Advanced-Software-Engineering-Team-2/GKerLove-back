@@ -1,9 +1,9 @@
 package com.gker.gkerlove.controller;
 
 import com.gker.gkerlove.bean.User;
-import com.gker.gkerlove.bean.dto.request.LoginRequest;
+import com.gker.gkerlove.bean.dto.LoginRequest;
 import com.gker.gkerlove.bean.common.R;
-import com.gker.gkerlove.bean.dto.request.RegisterRequest;
+import com.gker.gkerlove.bean.dto.RegisterRequest;
 import com.gker.gkerlove.bean.dto.UserDto;
 import com.gker.gkerlove.exception.GKerLoveException;
 import com.gker.gkerlove.interceptor.Login;

@@ -38,7 +38,7 @@ public class User {
         @Schema(description = "性别")
         private String gender;
 
-        @Schema(description = "性别")
+        @Schema(description = "年龄")
         private Integer age;
 
         @Schema(description = "所在城市")
