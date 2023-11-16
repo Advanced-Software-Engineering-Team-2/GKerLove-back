@@ -22,8 +22,8 @@ public class PostController {
     @Operation(description = "发布动态")
     @PostMapping
     public R addPost(@CurrentUser User user, @RequestBody PostDto postDto) {
-        postService.addPost(user, postDto);
-        return R.ok().message("发布成功");
+        postDto = postService.addPost(user, postDto);
+        return R.ok().message("发布成功").data("post", postDto);
     }
 
     @Operation(description = "获取用户发布的动态")

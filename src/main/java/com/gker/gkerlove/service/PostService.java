@@ -26,13 +26,14 @@ public class PostService {
     @Resource
     UserService userService;
 
-    public void addPost(User user, PostDto postDto) {
+    public PostDto addPost(User user, PostDto postDto) {
+        postDto.setId(UUID.randomUUID().toString());
+        postDto.setTime(LocalDateTime.now());
         Post post = new Post();
         BeanUtils.copyProperties(postDto, post);
-        post.setId(UUID.randomUUID().toString());
         post.setUserId(user.getId());
-        post.setTime(LocalDateTime.now());
         mongoTemplate.save(post);
+        return postDto;
     }
 
     public Page<PostDto> retrieve(Integer pageNumber, Integer pageSize, String userId) {

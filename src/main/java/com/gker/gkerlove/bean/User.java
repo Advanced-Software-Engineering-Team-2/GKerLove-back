@@ -26,30 +26,23 @@ public class User {
     @Schema(description = "创建时间")
     private LocalDateTime createTime;
 
-    @Schema(description = "用户信息")
-    private UserInfo info = new UserInfo();
+    @Schema(description = "用户头像")
+    private String avatar = "default-avatar";
 
-    @Data
-    @Schema(description = "用户信息")
-    public static class UserInfo {
-        @Schema(description = "用户头像")
-        private String avatar = "default-avatar";
+    @Schema(description = "性别")
+    private String gender;
 
-        @Schema(description = "性别")
-        private String gender;
+    @Schema(description = "年龄")
+    private Integer age;
 
-        @Schema(description = "年龄")
-        private Integer age;
+    @Schema(description = "所在城市")
+    private String city;
 
-        @Schema(description = "所在城市")
-        private String city;
+    @Schema(description = "培养单位")
+    private String institute;
 
-        @Schema(description = "培养单位")
-        private String institute;
-
-        @Schema(description = "自我介绍")
-        private String introduction;
-    }
+    @Schema(description = "自我介绍")
+    private String introduction;
 
     @Schema(description = "人气")
     Integer likedBy;
@@ -59,5 +52,4 @@ public class User {
 
     @Schema(description = "不再被推荐给本人的用户列表")
     List<String> nomeetinglist;
-
 }

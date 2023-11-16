@@ -2,12 +2,14 @@ package com.gker.gkerlove.service;
 
 import com.gker.gkerlove.bean.common.Page;
 import com.gker.gkerlove.bean.User;
+import com.gker.gkerlove.bean.dto.UpdateUserInfoReq;
 import com.gker.gkerlove.constants.CityConstants;
 import com.gker.gkerlove.constants.InstituteConstants;
 import com.gker.gkerlove.exception.GKerLoveException;
 import com.gker.gkerlove.util.JwtUtils;
 import com.gker.gkerlove.util.MD5Util;
 import jakarta.annotation.Resource;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -78,31 +80,30 @@ public class UserService {
         return new Page<>(total, userList);
     }
 
-    public User.UserInfo updateInfo(User user, User.UserInfo info) {
+    public void updateInfo(User user, UpdateUserInfoReq updateUserInfoReq) {
         // 性别校验
-        if (StringUtils.hasLength(info.getGender()) && !info.getGender().equals("男") && !info.getGender().equals("女"))
+        if (StringUtils.hasLength(updateUserInfoReq.getGender()) && !updateUserInfoReq.getGender().equals("男") && !updateUserInfoReq.getGender().equals("女"))
             throw new GKerLoveException("性别错误");
         // 年龄
-        if (info.getAge() != null && (info.getAge() < 0 || info.getAge() > 200))
+        if (updateUserInfoReq.getAge() != null && (updateUserInfoReq.getAge() < 0 || updateUserInfoReq.getAge() > 200))
             throw new GKerLoveException("年龄错误");
         // 城市
-        if (StringUtils.hasLength(info.getCity())) {
-            System.out.println(info.getCity());
-            if (info.getCity().length() > 20) throw new GKerLoveException("城市错误");
-            if (!CityConstants.CITIES.contains(info.getCity())) throw new GKerLoveException("城市错误");
+        if (StringUtils.hasLength(updateUserInfoReq.getCity())) {
+            System.out.println(updateUserInfoReq.getCity());
+            if (updateUserInfoReq.getCity().length() > 20) throw new GKerLoveException("城市错误");
+            if (!CityConstants.CITIES.contains(updateUserInfoReq.getCity())) throw new GKerLoveException("城市错误");
         }
         // 培养单位
-        if (StringUtils.hasLength(info.getInstitute())) {
-            if (info.getInstitute().length() > 20) throw new GKerLoveException("培养单位错误");
-            if (!InstituteConstants.INSTITUTES.contains(info.getInstitute()))
+        if (StringUtils.hasLength(updateUserInfoReq.getInstitute())) {
+            if (updateUserInfoReq.getInstitute().length() > 20) throw new GKerLoveException("培养单位错误");
+            if (!InstituteConstants.INSTITUTES.contains(updateUserInfoReq.getInstitute()))
                 throw new GKerLoveException("培养单位错误");
         }
         // 自我介绍
-        if (StringUtils.hasLength(info.getIntroduction()) && info.getIntroduction().length() > 50)
+        if (StringUtils.hasLength(updateUserInfoReq.getIntroduction()) && updateUserInfoReq.getIntroduction().length() > 50)
             throw new GKerLoveException("自我介绍长度不能超过50");
-        user.setInfo(info);
+        BeanUtils.copyProperties(updateUserInfoReq, user);
         mongoTemplate.save(user);
-        return info;
     }
 
 }
