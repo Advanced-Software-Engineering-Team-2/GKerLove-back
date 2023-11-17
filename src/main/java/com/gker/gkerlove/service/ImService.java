@@ -71,6 +71,10 @@ public class ImService {
             slefsignature.put("Tag","Tag_Profile_IM_SelfSignature");
             slefsignature.put("Value",profile);
             profileitems.add(slefsignature);
+            JSONObject avatar = new JSONObject();
+            avatar.put("Tag","Tag_Profile_IM_Image");
+            avatar.put("Value",user.getAvatar());
+            profileitems.add(avatar);
             param.put("ProfileItem",profileitems);
             return HttpUtils.sendPost(url, param.toJSONString());
         }
