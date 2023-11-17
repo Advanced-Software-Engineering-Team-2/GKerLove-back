@@ -5,6 +5,8 @@ import com.gker.gkerlove.bean.User;
 import com.gker.gkerlove.bean.common.Page;
 import com.gker.gkerlove.bean.dto.PostDto;
 import com.gker.gkerlove.bean.dto.UserDto;
+import com.gker.gkerlove.exception.GKerLoveException;
+import com.mongodb.client.result.DeleteResult;
 import jakarta.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.PageRequest;
@@ -34,6 +36,13 @@ public class PostService {
         post.setUserId(user.getId());
         mongoTemplate.save(post);
         return postDto;
+    }
+
+    public void deletePost(User user, String id) {
+        DeleteResult result = mongoTemplate.remove(new Query(Criteria.where("id").is(id).and("user_id").is(user.getId())), Post.class);
+        if (result.getDeletedCount() != 1) {
+            throw new GKerLoveException("删除失败");
+        }
     }
 
     public Page<PostDto> retrieve(Integer pageNumber, Integer pageSize, String userId) {

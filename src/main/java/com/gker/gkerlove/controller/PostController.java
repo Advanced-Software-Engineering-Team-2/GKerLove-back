@@ -26,6 +26,13 @@ public class PostController {
         return R.ok().message("发布成功").data("post", postDto);
     }
 
+    @Operation(description = "删除动态")
+    @DeleteMapping("{id}")
+    public R deletePost(@CurrentUser User user, @PathVariable("id")String id) {
+        postService.deletePost(user, id);
+        return R.ok().message("删除成功");
+    }
+
     @Operation(description = "获取用户发布的动态")
     @GetMapping("{id}")
     public R getUserPostList(@PathVariable("id") String id) {

@@ -27,7 +27,7 @@ public class User {
     private LocalDateTime createTime;
 
     @Schema(description = "用户头像")
-    private String avatar = "default-avatar";
+    private String avatar = "http://gker-love.oss-cn-beijing.aliyuncs.com/default-avatar";
 
     @Schema(description = "性别")
     private String gender;
