@@ -21,7 +21,7 @@ public class ImService {
         JSONObject param = new JSONObject();
         param.put("UserID", username);
         param.put("Nick", username);
-        param.put("FaceUrl", "");
+        param.put("FaceUrl", "http://gker-love.oss-cn-beijing.aliyuncs.com/default-avatar");
         return HttpUtils.sendPost(url, param.toJSONString());
     }
 
@@ -79,7 +79,18 @@ public class ImService {
             return HttpUtils.sendPost(url, param.toJSONString());
         }
         else{
-            return "未填写有效信息";
+            TLSSigAPIv2 api = new TLSSigAPIv2(1600009914, "d82b484df8d55fc6077400a56a4a42a5ef7ce2a53ee05777e7b416f6ee6d0c79");
+            String Sig = api.genUserSig("administrator", 60);
+            String url = "https://console.tim.qq.com/v4/profile/portrait_set?sdkappid=1600009914&identifier=administrator&usersig=" + Sig + "&random=99999999&contenttype=json";
+            JSONObject param = new JSONObject();
+            param.put("From_Account", user.getUsername());
+            List<JSONObject> profileitems = new ArrayList<>();
+            JSONObject avatar = new JSONObject();
+            avatar.put("Tag","Tag_Profile_IM_Image");
+            avatar.put("Value",user.getAvatar());
+            profileitems.add(avatar);
+            param.put("ProfileItem",profileitems);
+            return HttpUtils.sendPost(url, param.toJSONString());
         }
     }
 

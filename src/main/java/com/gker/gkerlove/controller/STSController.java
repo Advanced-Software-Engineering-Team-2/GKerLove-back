@@ -24,7 +24,7 @@ public class STSController {
     @Operation(description = "获取OSS临时操作凭证")
     @GetMapping("token")
     public R getToken(@CurrentUser User user) throws ClientException {
-        return R.ok().data("stsResponse", STSService.assumeRole(user.getUsername()));
+        return R.ok().data("stsResponse", STSService.assumeRole(user.getId()));
     }
 
 
