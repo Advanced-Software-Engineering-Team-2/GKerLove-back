@@ -24,19 +24,19 @@ public class MeetingService {
         Query query = new Query();
         query.addCriteria(Criteria.where("username").ne(fromusername));
         if (!gender.isEmpty()) {
-            query.addCriteria(Criteria.where("info.gender").is(gender));
+            query.addCriteria(Criteria.where("gender").is(gender));
         }
         if (min_age != 0) {
-            query.addCriteria(Criteria.where("info.age").gte(min_age));
+            query.addCriteria(Criteria.where("age").gte(min_age));
         }
         if (max_age != 0) {
-            query.addCriteria(Criteria.where("info.age").lte(max_age));
+            query.addCriteria(Criteria.where("age").lte(max_age));
         }
         if (!city.isEmpty()) {
-            query.addCriteria(Criteria.where("info.city").is(city));
+            query.addCriteria(Criteria.where("city").is(city));
         }
         if (!institute.isEmpty()) {
-            query.addCriteria(Criteria.where("info.institute").is(institute));
+            query.addCriteria(Criteria.where("institute").is(institute));
         }
         List<User> userlist = mongoTemplate.find(query, User.class);
         Query query1 = new Query(Criteria.where("username").is(fromusername));
