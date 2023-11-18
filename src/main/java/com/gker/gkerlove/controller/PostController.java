@@ -28,6 +28,12 @@ public class PostController {
         return R.ok().message("发布成功").data("post", postDto);
     }
 
+    @Operation(description = "检索动态")
+    @GetMapping
+    public R retrieve(@CurrentUser User user, @RequestParam(value = "page") Integer page) {
+        return R.ok().data("posts", postService.retrieve(page, 10, null));
+    }
+
     @Operation(description = "删除动态")
     @DeleteMapping("{id}")
     public R deletePost(@CurrentUser User user, @PathVariable("id") String id) {

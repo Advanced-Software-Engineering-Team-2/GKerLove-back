@@ -39,7 +39,8 @@ public class PostService {
         post.setUserId(user.getId());
         mongoTemplate.save(post);
         PostDto postDto = new PostDto();
-        BeanUtils.copyProperties(postDto, post);
+        BeanUtils.copyProperties(post, postDto);
+        postDto.setCommentCnt(post.getCommentList().size());
         return postDto;
     }
 
@@ -50,6 +51,7 @@ public class PostService {
         }
     }
 
+    @SuppressWarnings("DuplicatedCode")
     public PostDto getById(String id) {
         Post post = mongoTemplate.findById(id, Post.class);
         if (post == null) return null;
@@ -94,7 +96,8 @@ public class PostService {
             PostDto postDto = new PostDto();
             BeanUtils.copyProperties(post, postDto);
             UserDto postUserDto = new UserDto();
-            User postUser = userService.getById(userId);
+            System.out.println(post.getUserId());
+            User postUser = userService.getById(post.getUserId());
             BeanUtils.copyProperties(postUser, postUserDto);
             postDto.setUser(postUserDto);
             postDto.setCommentCnt(post.getCommentList().size());
