@@ -2,7 +2,7 @@ package com.gker.gkerlove.service;
 
 import com.gker.gkerlove.bean.common.Page;
 import com.gker.gkerlove.bean.User;
-import com.gker.gkerlove.bean.dto.UpdateUserInfoReq;
+import com.gker.gkerlove.bean.dto.req.UpdateUserInfoReq;
 import com.gker.gkerlove.constants.CityConstants;
 import com.gker.gkerlove.constants.InstituteConstants;
 import com.gker.gkerlove.exception.GKerLoveException;

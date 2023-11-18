@@ -2,7 +2,7 @@ package com.gker.gkerlove.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.gker.gkerlove.bean.User;
-import com.gker.gkerlove.bean.dto.UpdateUserInfoReq;
+import com.gker.gkerlove.bean.dto.req.UpdateUserInfoReq;
 import com.gker.gkerlove.util.HttpUtils;
 import com.tencentyun.TLSSigAPIv2;
 import org.springframework.stereotype.Service;

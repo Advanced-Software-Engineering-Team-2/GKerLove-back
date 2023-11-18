@@ -1,10 +1,10 @@
 package com.gker.gkerlove.controller;
 
 import com.gker.gkerlove.bean.User;
-import com.gker.gkerlove.bean.dto.LoginReq;
+import com.gker.gkerlove.bean.dto.req.LoginReq;
 import com.gker.gkerlove.bean.common.R;
-import com.gker.gkerlove.bean.dto.RegisterReq;
-import com.gker.gkerlove.bean.dto.UpdateUserInfoReq;
+import com.gker.gkerlove.bean.dto.req.RegisterReq;
+import com.gker.gkerlove.bean.dto.req.UpdateUserInfoReq;
 import com.gker.gkerlove.bean.dto.UserDto;
 import com.gker.gkerlove.exception.GKerLoveException;
 import com.gker.gkerlove.interceptor.Login;

@@ -25,6 +25,9 @@ public class PostDto {
     @Schema(description = "发布时间")
     LocalDateTime time;
 
+    @Schema(description = "评论数量")
+    Integer commentCnt;
+
     @Schema(description = "评论列表")
     List<Comment> commentList = new ArrayList<>();
 
