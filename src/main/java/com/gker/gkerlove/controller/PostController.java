@@ -56,7 +56,7 @@ public class PostController {
     @Operation(description = "评论动态")
     @PostMapping("comment/{id}")
     public R comment(@CurrentUser User user, @PathVariable("id") String id, @RequestBody CommentReq commentReq) {
-        PostDto.Comment comment = postService.commentOnPost(user, commentReq, id);
-        return R.ok().message("评论成功").data("comment", comment);
+        postService.commentOnPost(user, commentReq, id);
+        return R.ok().message("评论成功");
     }
 }

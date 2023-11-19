@@ -96,7 +96,6 @@ public class PostService {
             PostDto postDto = new PostDto();
             BeanUtils.copyProperties(post, postDto);
             UserDto postUserDto = new UserDto();
-            System.out.println(post.getUserId());
             User postUser = userService.getById(post.getUserId());
             BeanUtils.copyProperties(postUser, postUserDto);
             postDto.setUser(postUserDto);
@@ -107,9 +106,10 @@ public class PostService {
         return new Page<>(total, postDtoList);
     }
 
-    public PostDto.Comment commentOnPost(User user, CommentReq commentReq, String postId) {
+    // 加锁，避免并发导致评论问题
+    public synchronized void commentOnPost(User user, CommentReq commentReq, String postId) {
         Post post = mongoTemplate.findById(postId, Post.class);
-        if (post == null) return null;
+        if (post == null) return;
         Post.Comment comment = new Post.Comment();
         comment.setId(UUID.randomUUID().toString());
         comment.setContent(commentReq.getContent());
@@ -117,11 +117,5 @@ public class PostService {
         comment.setUserId(user.getId());
         post.getCommentList().add(comment);
         mongoTemplate.save(post);
-        PostDto.Comment commentDto = new PostDto.Comment();
-        BeanUtils.copyProperties(comment, commentDto);
-        UserDto userDto = new UserDto();
-        BeanUtils.copyProperties(user, userDto);
-        commentDto.setUser(userDto);
-        return commentDto;
     }
 }
