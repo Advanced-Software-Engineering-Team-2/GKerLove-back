@@ -89,7 +89,6 @@ public class UserService {
             throw new GKerLoveException("年龄错误");
         // 城市
         if (StringUtils.hasLength(updateUserInfoReq.getCity())) {
-            System.out.println(updateUserInfoReq.getCity());
             if (updateUserInfoReq.getCity().length() > 20) throw new GKerLoveException("城市错误");
             if (!CityConstants.CITIES.contains(updateUserInfoReq.getCity())) throw new GKerLoveException("城市错误");
         }
