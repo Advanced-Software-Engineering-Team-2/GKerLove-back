@@ -60,8 +60,6 @@ public class UserService {
         user.setPassword(MD5Util.encrypt(password));
         user.setEmail(email);
         user.setCreateTime(LocalDateTime.now());
-        user.setLikes(0);
-        user.setLikedBy(0);
         mongoTemplate.save(user);
     }
 

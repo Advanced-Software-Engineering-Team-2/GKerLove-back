@@ -5,6 +5,7 @@ import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -44,12 +45,11 @@ public class User {
     @Schema(description = "自我介绍")
     private String introduction;
 
-    @Schema(description = "人气")
-    Integer likedBy;
+    @Schema(description = "喜欢我的用户Id列表")
+    List<String> likedByUserIdList = new ArrayList<>();
 
-    @Schema(description = "喜欢")
-    Integer likes;
+    @Schema(description = "喜欢的用户Id列表")
+    List<String> likesUserIdList = new ArrayList<>();
 
-    @Schema(description = "不再被推荐给本人的用户列表")
-    List<String> nomeetinglist;
+
 }

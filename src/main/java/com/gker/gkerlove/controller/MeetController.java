@@ -30,23 +30,22 @@ public class MeetController {
 
 
     @Operation(description = "发送喜欢请求")
-    @PostMapping("addlove")
-    public R addlove(@RequestParam String fromusername, @RequestParam String tousername) {
-        String s = meetService.MeetingAddlover(fromusername, tousername);
-        meetService.MeetingNotlove(fromusername, tousername);
+    @PostMapping("like/{id}")
+    public R likeSomeone(@CurrentUser User currentUser, @PathVariable("id") String userId) {
+        String s = meetService.likeSomeone(currentUser, userId);
         JSONObject parse = (JSONObject) JSONObject.parse(s);
         String r = parse.getString("ActionStatus");
         if (!r.equals("OK")) {
             throw new GKerLoveException("发送喜欢请求失败,错误信息:" + parse.getString("ErrorInfo"));
         }
-        return R.ok().message("已发送喜欢请求");
+        return R.ok().message("已喜欢");
     }
 
     @Operation(description = "发送不喜欢请求")
-    @PostMapping("notlove")
-    public R notlove(@RequestParam String fromusername, @RequestParam String tousername) {
-        meetService.MeetingNotlove(fromusername, tousername);
-        return R.ok().message("已不再推荐该用户");
+    @PostMapping("dislike/{id}")
+    public R dislikeSomeone(@CurrentUser User currentUser, @PathVariable("id") String userId) {
+        meetService.dislikeSomeone(currentUser, userId);
+        return R.ok().message("取消喜欢成功");
     }
 
     @Operation(description = "获取用户信息")

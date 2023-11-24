@@ -4,6 +4,9 @@ import com.gker.gkerlove.bean.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Schema(description = "用户信息Dto")
 public class UserDto {
@@ -34,9 +37,9 @@ public class UserDto {
     @Schema(description = "自我介绍")
     private String introduction;
 
-    @Schema(description = "人气")
-    Integer likedBy;
+    @Schema(description = "喜欢我的用户Id列表")
+    List<String> likedByUserIdList = new ArrayList<>();
 
-    @Schema(description = "喜欢")
-    Integer likes;
+    @Schema(description = "喜欢的用户Id列表")
+    List<String> likesUserIdList = new ArrayList<>();
 }
