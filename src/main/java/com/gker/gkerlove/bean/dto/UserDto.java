@@ -1,6 +1,5 @@
 package com.gker.gkerlove.bean.dto;
 
-import com.gker.gkerlove.bean.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -37,9 +36,15 @@ public class UserDto {
     @Schema(description = "自我介绍")
     private String introduction;
 
+    @Schema(description = "喜欢")
+    private Integer likes = 0;
+
+    @Schema(description = "人气")
+    private Integer likedBy = 0;
+
     @Schema(description = "喜欢我的用户Id列表")
-    List<String> likedByUserIdList = new ArrayList<>();
+    private List<String> likedByUserIdList = new ArrayList<>();
 
     @Schema(description = "喜欢的用户Id列表")
-    List<String> likesUserIdList = new ArrayList<>();
+    private List<String> likeUserIdList = new ArrayList<>();
 }

@@ -54,4 +54,17 @@ public class MeetController {
         return R.ok().data("user", meetService.getUserById(id));
     }
 
+    @Operation(description = "获取我喜欢的用户列表")
+    @GetMapping("likes")
+    public R getMyLikes(@CurrentUser User user) {
+        return R.ok().data("likes", meetService.getMyLikes(user));
+    }
+
+    @Operation(description = "获取喜欢我的用户列表")
+    @GetMapping("likedBy")
+    public R getLikedBy(@CurrentUser User user) {
+        return R.ok().data("likedBy", meetService.getWhoLikeMe(user));
+    }
+
+
 }
