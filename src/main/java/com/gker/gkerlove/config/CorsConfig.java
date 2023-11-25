@@ -14,14 +14,14 @@ public class CorsConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(@Nonnull CorsRegistry registry) {
-        if (isDevelopment()) {
+        if (env.equals("dev")) {
             registry.addMapping("/**")
                     // 用户前台和管理员后台
                     .allowedOriginPatterns("http://localhost*").allowCredentials(true).allowedMethods("GET", "POST", "PUT", "DELETE").allowedHeaders("*");
+        } else if (env.equals("prd")) {
+            registry.addMapping("/**")
+                    // 用户前台和管理员后台
+                    .allowedOriginPatterns("https://love.gkers.cqupt-gyr.xyz").allowCredentials(true).allowedMethods("GET", "POST", "PUT", "DELETE").allowedHeaders("*");
         }
-    }
-
-    private boolean isDevelopment() {
-        return "dev".equals(env);
     }
 }
