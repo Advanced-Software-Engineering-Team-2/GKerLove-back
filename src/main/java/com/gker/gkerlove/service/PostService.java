@@ -107,9 +107,9 @@ public class PostService {
     }
 
     // 加锁，避免并发导致评论问题
-    public synchronized void commentOnPost(User user, CommentReq commentReq, String postId) {
+    public synchronized PostDto.Comment commentOnPost(User user, CommentReq commentReq, String postId) {
         Post post = mongoTemplate.findById(postId, Post.class);
-        if (post == null) return;
+        if (post == null) return null;
         Post.Comment comment = new Post.Comment();
         comment.setId(UUID.randomUUID().toString());
         comment.setContent(commentReq.getContent());
@@ -117,5 +117,12 @@ public class PostService {
         comment.setUserId(user.getId());
         post.getCommentList().add(comment);
         mongoTemplate.save(post);
+        PostDto.Comment commentDto = new PostDto.Comment();
+        BeanUtils.copyProperties(comment, commentDto);
+        User commentUser = userService.getById(user.getId());
+        UserDto userDto = new UserDto();
+        BeanUtils.copyProperties(commentUser, userDto);
+        commentDto.setUser(userDto);
+        return commentDto;
     }
 }

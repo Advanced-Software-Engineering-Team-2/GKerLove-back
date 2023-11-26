@@ -30,7 +30,7 @@ public class PostController {
 
     @Operation(description = "检索动态")
     @GetMapping
-    public R retrieve(@CurrentUser User user, @RequestParam(value = "page") Integer page) {
+    public R retrieve(@RequestParam(value = "page") Integer page) {
         return R.ok().data("posts", postService.retrieve(page, 10, null));
     }
 
@@ -56,7 +56,7 @@ public class PostController {
     @Operation(description = "评论动态")
     @PostMapping("comment/{id}")
     public R comment(@CurrentUser User user, @PathVariable("id") String id, @RequestBody CommentReq commentReq) {
-        postService.commentOnPost(user, commentReq, id);
-        return R.ok().message("评论成功");
+        PostDto.Comment comment = postService.commentOnPost(user, commentReq, id);
+        return R.ok().message("评论成功").data("comment", comment);
     }
 }
