@@ -18,8 +18,6 @@ public class Session {
     String initiatorId;
     @Schema(description = "接收人id")
     String recipientId;
-    @Schema(description = "会话最后更新时间，用于会话排序")
-    LocalDateTime lastUpdated;
     @Schema(description = "发起人最后阅读时间")
     LocalDateTime initiatorLastRead;
     @Schema(description = "接收人最后阅读时间")

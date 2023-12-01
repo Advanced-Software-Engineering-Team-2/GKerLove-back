@@ -25,11 +25,4 @@ public class MessageController {
         List<SessionDto> sessionDtoList = messageService.retrieveMessages(user.getId());
         return R.ok().data("sessions", sessionDtoList);
     }
-
-    @Operation(description = "创建聊天会话")
-    @PostMapping("{recipientId}")
-    public R createSession(@CurrentUser User user, @PathVariable("recipientId") String recipientId) {
-        SessionDto sessionDto = messageService.initSession(user.getId(), recipientId);
-        return R.ok().data("session", sessionDto);
-    }
 }
