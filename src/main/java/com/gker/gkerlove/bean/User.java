@@ -57,5 +57,10 @@ public class User {
     @Schema(description = "喜欢的用户Id列表")
     private List<String> likeUserIdList = new ArrayList<>();
 
+    @Schema(description = "是否在线")
+    private boolean online;
+
+    @Schema(description = "最后上线时间")
+    private LocalDateTime lastOnline;
 
 }

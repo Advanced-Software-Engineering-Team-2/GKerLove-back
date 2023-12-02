@@ -8,9 +8,11 @@ import java.time.LocalDateTime;
 @Data
 @Schema(description = "消息")
 public class Message {
+    @Schema(description = "消息id")
+    String id;
     @Schema(description = "创建时间")
     LocalDateTime timestamp;
-    @Schema(description = "消息类型，text | image")
+    @Schema(description = "消息类型，text | image | disappearing")
     String type;
     @Schema(description = "发送者Id")
     String senderId;
@@ -18,4 +20,7 @@ public class Message {
     String recipientId;
     @Schema(description = "内容")
     String content;
+    @Schema(description = "闪图是否查看")
+    Boolean viewed;
+
 }

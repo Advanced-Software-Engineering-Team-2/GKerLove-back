@@ -3,6 +3,7 @@ package com.gker.gkerlove.bean.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,4 +48,10 @@ public class UserDto {
 
     @Schema(description = "喜欢的用户Id列表")
     private List<String> likeUserIdList = new ArrayList<>();
+
+    @Schema(description = "是否在线")
+    private boolean online;
+
+    @Schema(description = "最后上线时间")
+    private LocalDateTime lastOnline;
 }
