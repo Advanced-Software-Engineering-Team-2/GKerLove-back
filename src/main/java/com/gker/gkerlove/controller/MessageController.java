@@ -25,4 +25,11 @@ public class MessageController {
         List<SessionDto> sessionDtoList = messageService.retrieveMessages(user.getId());
         return R.ok().data("sessions", sessionDtoList);
     }
+
+    @Operation(description = "获取某个聊天会话的消息记录")
+    @GetMapping("{id}")
+    public R getChatHistory(@CurrentUser User user, @PathVariable("id") String sessionId) {
+        SessionDto sessionDto = messageService.getChatHistory(user, sessionId);
+        return R.ok().data("session", sessionDto);
+    }
 }

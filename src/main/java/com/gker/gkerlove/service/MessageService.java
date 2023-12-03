@@ -1,9 +1,11 @@
 package com.gker.gkerlove.service;
 
+import com.gker.gkerlove.bean.Message;
 import com.gker.gkerlove.bean.Session;
 import com.gker.gkerlove.bean.User;
 import com.gker.gkerlove.bean.dto.SessionDto;
 import com.gker.gkerlove.bean.dto.UserDto;
+import com.gker.gkerlove.exception.GKerLoveException;
 import jakarta.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -34,6 +36,17 @@ public class MessageService {
             }
         }
         return sessionDtoList;
+    }
+
+    public SessionDto getChatHistory(User user, String sessionId) {
+        Query query = new Query();
+        query.addCriteria(new Criteria().orOperator(Criteria.where("initiatorId").is(user.getId()), Criteria.where("recipientId").is(user.getId())));
+        query.addCriteria(Criteria.where("id").is(sessionId));
+        Session session = mongoTemplate.findOne(query, Session.class);
+        if (session == null) {
+            throw new GKerLoveException("会话不存在");
+        }
+        return session2SessionDto(user.getId(), session);
     }
 
     private SessionDto session2SessionDto(String userId, Session session) {
