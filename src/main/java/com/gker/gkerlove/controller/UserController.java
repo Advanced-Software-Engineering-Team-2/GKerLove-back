@@ -83,7 +83,7 @@ public class UserController {
     @Login
     public R updateInfo(@CurrentUser User user, @RequestBody UpdateUserInfoReq updateUserInfoReq) {
         userService.updateInfo(user, updateUserInfoReq);
-        String s = imService.UpdateProfile(user, updateUserInfoReq);
+//        String s = imService.UpdateProfile(user, updateUserInfoReq);
         return R.ok().message("更新信息成功");
     }
 }

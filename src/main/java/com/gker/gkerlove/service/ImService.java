@@ -37,30 +37,25 @@ public class ImService {
         param.put("GroupName", groupnames);
         return HttpUtils.sendPost(url, param.toJSONString());
     }
+
     public String UpdateProfile(User user, UpdateUserInfoReq updateUserInfoReq) {
         String profile = null;
-        if(StringUtils.hasLength(updateUserInfoReq.getGender())){
+        if (StringUtils.hasLength(updateUserInfoReq.getGender())) {
             profile = "性别:" + updateUserInfoReq.getGender() + "; ";
         }
-        if(updateUserInfoReq.getAge() != null){
-            if(profile != null)
-                profile += "年龄:" + updateUserInfoReq.getAge() + "; ";
-            else
-                profile = "年龄:" + updateUserInfoReq.getAge() + "; ";
+        if (updateUserInfoReq.getAge() != null) {
+            if (profile != null) profile += "年龄:" + updateUserInfoReq.getAge() + "; ";
+            else profile = "年龄:" + updateUserInfoReq.getAge() + "; ";
         }
-        if(StringUtils.hasLength(updateUserInfoReq.getCity())){
-            if(profile != null)
-                profile += "所在城市:" + updateUserInfoReq.getCity() + "; ";
-            else
-                profile = "所在城市:" + updateUserInfoReq.getCity() + "; ";
+        if (StringUtils.hasLength(updateUserInfoReq.getCity())) {
+            if (profile != null) profile += "所在城市:" + updateUserInfoReq.getCity() + "; ";
+            else profile = "所在城市:" + updateUserInfoReq.getCity() + "; ";
         }
-        if(StringUtils.hasLength(updateUserInfoReq.getInstitute())){
-            if(profile != null)
-                profile += "培养单位:" + updateUserInfoReq.getInstitute() + "; ";
-            else
-                profile = "培养单位:" + updateUserInfoReq.getInstitute() + "; ";
+        if (StringUtils.hasLength(updateUserInfoReq.getInstitute())) {
+            if (profile != null) profile += "培养单位:" + updateUserInfoReq.getInstitute() + "; ";
+            else profile = "培养单位:" + updateUserInfoReq.getInstitute() + "; ";
         }
-        if(profile != null){
+        if (profile != null) {
             TLSSigAPIv2 api = new TLSSigAPIv2(1600009914, "d82b484df8d55fc6077400a56a4a42a5ef7ce2a53ee05777e7b416f6ee6d0c79");
             String Sig = api.genUserSig("administrator", 60);
             String url = "https://console.tim.qq.com/v4/profile/portrait_set?sdkappid=1600009914&identifier=administrator&usersig=" + Sig + "&random=99999999&contenttype=json";
@@ -68,17 +63,16 @@ public class ImService {
             param.put("From_Account", user.getUsername());
             List<JSONObject> profileitems = new ArrayList<>();
             JSONObject slefsignature = new JSONObject();
-            slefsignature.put("Tag","Tag_Profile_IM_SelfSignature");
-            slefsignature.put("Value",profile);
+            slefsignature.put("Tag", "Tag_Profile_IM_SelfSignature");
+            slefsignature.put("Value", profile);
             profileitems.add(slefsignature);
             JSONObject avatar = new JSONObject();
-            avatar.put("Tag","Tag_Profile_IM_Image");
-            avatar.put("Value",user.getAvatar());
+            avatar.put("Tag", "Tag_Profile_IM_Image");
+            avatar.put("Value", user.getAvatar());
             profileitems.add(avatar);
-            param.put("ProfileItem",profileitems);
+            param.put("ProfileItem", profileitems);
             return HttpUtils.sendPost(url, param.toJSONString());
-        }
-        else{
+        } else {
             TLSSigAPIv2 api = new TLSSigAPIv2(1600009914, "d82b484df8d55fc6077400a56a4a42a5ef7ce2a53ee05777e7b416f6ee6d0c79");
             String Sig = api.genUserSig("administrator", 60);
             String url = "https://console.tim.qq.com/v4/profile/portrait_set?sdkappid=1600009914&identifier=administrator&usersig=" + Sig + "&random=99999999&contenttype=json";
@@ -86,10 +80,10 @@ public class ImService {
             param.put("From_Account", user.getUsername());
             List<JSONObject> profileitems = new ArrayList<>();
             JSONObject avatar = new JSONObject();
-            avatar.put("Tag","Tag_Profile_IM_Image");
-            avatar.put("Value",user.getAvatar());
+            avatar.put("Tag", "Tag_Profile_IM_Image");
+            avatar.put("Value", user.getAvatar());
             profileitems.add(avatar);
-            param.put("ProfileItem",profileitems);
+            param.put("ProfileItem", profileitems);
             return HttpUtils.sendPost(url, param.toJSONString());
         }
     }
