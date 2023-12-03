@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Schema(description = "消息")
 public class Message {
     @Schema(description = "消息id")
-    String id;
+    String _id;
     @Schema(description = "创建时间")
     LocalDateTime timestamp;
     @Schema(description = "消息类型，text | image | disappearing")
