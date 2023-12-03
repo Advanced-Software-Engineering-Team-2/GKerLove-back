@@ -52,18 +52,18 @@ public class UserController {
         if (!registerReq.getCaptcha().equalsIgnoreCase(sessionCaptcha)) {
             throw new GKerLoveException("验证码错误");
         }
-        String s = imService.Imregister(registerReq.getUsername());
-        JSONObject parse = (JSONObject) JSONObject.parse(s);
-        String r = parse.getString("ActionStatus");
-        if (!r.equals("OK")) {
-            throw new GKerLoveException("im系统注册失败,错误信息:" + parse.getString("ErrorInfo"));
-        }
-        String s1 = imService.CreateFriendGroup(registerReq.getUsername());
-        JSONObject parse1 = (JSONObject) JSONObject.parse(s1);
-        String r1 = parse1.getString("ActionStatus");
-        if (!r1.equals("OK")) {
-            throw new GKerLoveException("好友分类初始化失败,错误信息:" + parse.getString("ErrorInfo"));
-        }
+//        String s = imService.Imregister(registerReq.getUsername());
+//        JSONObject parse = (JSONObject) JSONObject.parse(s);
+//        String r = parse.getString("ActionStatus");
+//        if (!r.equals("OK")) {
+//            throw new GKerLoveException("im系统注册失败,错误信息:" + parse.getString("ErrorInfo"));
+//        }
+//        String s1 = imService.CreateFriendGroup(registerReq.getUsername());
+//        JSONObject parse1 = (JSONObject) JSONObject.parse(s1);
+//        String r1 = parse1.getString("ActionStatus");
+//        if (!r1.equals("OK")) {
+//            throw new GKerLoveException("好友分类初始化失败,错误信息:" + parse.getString("ErrorInfo"));
+//        }
         httpSession.removeAttribute("captcha");
         userService.register(registerReq.getUsername(), registerReq.getPassword(), registerReq.getEmail(), registerReq.getCode());
         return R.ok().message("注册成功");
