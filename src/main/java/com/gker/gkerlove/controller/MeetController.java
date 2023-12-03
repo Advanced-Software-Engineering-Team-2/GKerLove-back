@@ -32,12 +32,12 @@ public class MeetController {
     @Operation(description = "发送喜欢请求")
     @PostMapping("like/{id}")
     public R likeSomeone(@CurrentUser User currentUser, @PathVariable("id") String userId) {
-        String s = meetService.likeSomeone(currentUser, userId);
-        JSONObject parse = (JSONObject) JSONObject.parse(s);
-        String r = parse.getString("ActionStatus");
-        if (!r.equals("OK")) {
-            throw new GKerLoveException("发送喜欢请求失败,错误信息:" + parse.getString("ErrorInfo"));
-        }
+        meetService.likeSomeone(currentUser, userId);
+//        JSONObject parse = (JSONObject) JSONObject.parse(s);
+//        String r = parse.getString("ActionStatus");
+//        if (!r.equals("OK")) {
+//            throw new GKerLoveException("发送喜欢请求失败,错误信息:" + parse.getString("ErrorInfo"));
+//        }
         return R.ok().message("已喜欢");
     }
 
