@@ -17,7 +17,7 @@ public class CorsConfig implements WebMvcConfigurer {
         if (env.equals("dev")) {
             registry.addMapping("/**")
                     // 用户前台和管理员后台
-                    .allowedOriginPatterns("http://localhost*").allowCredentials(true).allowedMethods("GET", "POST", "PUT", "DELETE").allowedHeaders("*");
+                    .allowedOriginPatterns("*").allowCredentials(true).allowedMethods("GET", "POST", "PUT", "DELETE").allowedHeaders("*");
         } else if (env.equals("prd")) {
             registry.addMapping("/**")
                     // 用户前台和管理员后台
