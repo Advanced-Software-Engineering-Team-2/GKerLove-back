@@ -21,7 +21,7 @@ public class CorsConfig implements WebMvcConfigurer {
         } else if (env.equals("prd")) {
             registry.addMapping("/**")
                     // 用户前台和管理员后台
-                    .allowedOriginPatterns("https://love.gkers.cqupt-gyr.xyz").allowCredentials(true).allowedMethods("GET", "POST", "PUT", "DELETE").allowedHeaders("*");
+                    .allowedOriginPatterns("https://love.gkers.cqupt-gyr.xyz", "https://love.gkers.top").allowCredentials(true).allowedMethods("GET", "POST", "PUT", "DELETE").allowedHeaders("*");
         }
     }
 }

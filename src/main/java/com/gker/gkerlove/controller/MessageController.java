@@ -32,4 +32,5 @@ public class MessageController {
         SessionDto sessionDto = messageService.getChatHistory(user, sessionId);
         return R.ok().data("session", sessionDto);
     }
+
 }
