@@ -45,7 +45,7 @@ public class PostService {
     }
 
     public void deletePost(User user, String id) {
-        DeleteResult result = mongoTemplate.remove(new Query(Criteria.where("id").is(id).and("user_id").is(user.getId())), Post.class);
+        DeleteResult result = mongoTemplate.remove(new Query(Criteria.where("id").is(id).and("userId").is(user.getId())), Post.class);
         if (result.getDeletedCount() != 1) {
             throw new GKerLoveException("删除失败");
         }
