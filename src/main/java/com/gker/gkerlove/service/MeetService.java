@@ -31,6 +31,7 @@ public class MeetService {
     public List<UserDto> getUserList(User currentUser, String gender, Integer minAge, Integer maxAge, String city, String institute) {
         List<Criteria> criteriaList = new ArrayList<>();
         criteriaList.add(Criteria.where("username").ne(currentUser.getUsername()));
+        criteriaList.add(Criteria.where("_id").ne("Anonymous"));
         if (StringUtils.hasLength(gender)) {
             criteriaList.add(Criteria.where("gender").is(gender));
         }
