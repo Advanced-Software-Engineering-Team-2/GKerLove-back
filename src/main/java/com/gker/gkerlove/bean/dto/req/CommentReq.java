@@ -8,4 +8,7 @@ import lombok.Data;
 public class CommentReq {
     @Schema(description = "评论内容")
     String content;
+
+    @Schema(description = "是否匿名")
+    Boolean anonymous;
 }

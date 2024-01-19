@@ -7,6 +7,7 @@ import com.gker.gkerlove.bean.dto.req.AddPostReq;
 import com.gker.gkerlove.bean.dto.req.CommentReq;
 import com.gker.gkerlove.bean.dto.PostDto;
 import com.gker.gkerlove.bean.dto.UserDto;
+import com.gker.gkerlove.constants.UserConstants;
 import com.gker.gkerlove.exception.GKerLoveException;
 import com.mongodb.client.result.DeleteResult;
 import jakarta.annotation.Resource;
@@ -36,7 +37,11 @@ public class PostService {
         post.setContent(addPostReq.getContent());
         post.setImageList(addPostReq.getImageList());
         post.setTime(LocalDateTime.now());
-        post.setUserId(user.getId());
+        if (!addPostReq.getAnonymous()) {
+            post.setUserId(user.getId());
+        } else {
+            post.setUserId(UserConstants.anonymous.getId());
+        }
         mongoTemplate.save(post);
         PostDto postDto = new PostDto();
         BeanUtils.copyProperties(post, postDto);
@@ -114,12 +119,16 @@ public class PostService {
         comment.setId(UUID.randomUUID().toString());
         comment.setContent(commentReq.getContent());
         comment.setTime(LocalDateTime.now());
-        comment.setUserId(user.getId());
+        if (!commentReq.getAnonymous()) {
+            comment.setUserId(user.getId());
+        } else {
+            comment.setUserId(UserConstants.anonymous.getId());
+        }
         post.getCommentList().add(comment);
         mongoTemplate.save(post);
         PostDto.Comment commentDto = new PostDto.Comment();
         BeanUtils.copyProperties(comment, commentDto);
-        User commentUser = userService.getById(user.getId());
+        User commentUser = userService.getById(comment.getUserId());
         UserDto userDto = new UserDto();
         BeanUtils.copyProperties(commentUser, userDto);
         commentDto.setUser(userDto);

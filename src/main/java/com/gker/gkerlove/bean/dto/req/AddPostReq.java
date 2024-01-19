@@ -13,4 +13,7 @@ public class AddPostReq {
 
     @Schema(description = "动态图片列表")
     List<String> imageList;
+
+    @Schema(description = "是否匿名")
+    Boolean anonymous;
 }

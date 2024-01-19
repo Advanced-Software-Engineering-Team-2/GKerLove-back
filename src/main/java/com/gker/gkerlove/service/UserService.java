@@ -29,7 +29,7 @@ public class UserService {
     CodeService codeService;
 
     public String login(String username, String password) {
-        if (username == null || password == null) throw new GKerLoveException("用户名、密码不能为空");
+        if (!StringUtils.hasLength(username) || !StringUtils.hasLength(password)) throw new GKerLoveException("用户名、密码不能为空");
         // 长度校验
         if (username.length() < 4 || username.length() > 20) throw new GKerLoveException("用户名长度必须在4-20之间");
         if (password.length() < 6 || password.length() > 50) throw new GKerLoveException("密码长度必须在6-50之间");
