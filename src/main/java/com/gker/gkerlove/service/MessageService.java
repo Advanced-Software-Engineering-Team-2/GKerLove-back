@@ -29,7 +29,7 @@ public class MessageService {
         List<SessionDto> sessionDtoList = new ArrayList<>();
         for (Session session : sessionList) {
             // 过滤掉匿名会话
-            if (session.getAnonymous()) continue;
+            if (session.getAnonymous() != null && session.getAnonymous()) continue;
             SessionDto sessionDto = session2SessionDto(userId, session);
             // 过滤掉viewed为true的消息
             sessionDto.setMessages(sessionDto.getMessages().stream().filter((message -> message.getViewed() == null || !message.getViewed())).toList());
