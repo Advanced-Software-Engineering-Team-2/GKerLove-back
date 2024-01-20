@@ -24,4 +24,6 @@ public class Session {
     LocalDateTime recipientLastRead;
     @Schema(description = "消息")
     List<Message> messages = new ArrayList<>();
+    @Schema(description = "是否匿名")
+    Boolean anonymous;
 }
