@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+bootstrap.yml
+bootstrap-dev.yml
+bootstrap-prd.yml
