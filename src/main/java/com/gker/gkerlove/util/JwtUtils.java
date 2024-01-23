@@ -6,16 +6,20 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
 
 
+@Component
 public class JwtUtils {
     public static final long EXPIRE = 1000 * 60 * 60 * 24; // 过期时间为1天
-    public static final String APP_SECRET = "Zm9zaGZuZm9lYXdib3NkbnZvc2lmZ29zamNvbG5qb3NpZ2Rmb2d2amgwZTR3ZnNpbGFkZnY=";
+    @Value("${JWT.appSecret}")
+    public String APP_SECRET;
 
-    public static String getToken(User user) {
+    public String getToken(User user) {
         return Jwts.builder().setHeaderParam("typ", "JWT").setHeaderParam("alg", "HS256").setSubject("user") // 分类
                 .setIssuedAt(new Date()).setExpiration(new Date(System.currentTimeMillis() + EXPIRE))
                 // token主体部分，存储用户ID
@@ -24,7 +28,7 @@ public class JwtUtils {
                 .signWith(SignatureAlgorithm.HS256, APP_SECRET).compact();
     }
 
-    public static boolean checkToken(String token) {
+    public boolean checkToken(String token) {
         if (!StringUtils.hasLength(token)) return true;
         try {
             Jwts.parser().setSigningKey(APP_SECRET).parseClaimsJws(token);
@@ -34,7 +38,7 @@ public class JwtUtils {
         return true;
     }
 
-    public static String getUserId(String token) {
+    public String getUserId(String token) {
         Jws<Claims> claimsJws = Jwts.parser().setSigningKey(APP_SECRET).parseClaimsJws(token);
         Claims claims = claimsJws.getBody();
         return (String) claims.get("id");

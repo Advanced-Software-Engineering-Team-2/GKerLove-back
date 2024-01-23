@@ -28,6 +28,9 @@ public class UserService {
     @Resource
     CodeService codeService;
 
+    @Resource
+    JwtUtils jwtUtils;
+
     public String login(String username, String password) {
         if (!StringUtils.hasLength(username) || !StringUtils.hasLength(password)) throw new GKerLoveException("用户名、密码不能为空");
         // 长度校验
@@ -37,7 +40,7 @@ public class UserService {
         User user = mongoTemplate.findOne(query, User.class);
         if (user == null) throw new GKerLoveException("用户名或密码错误");
         if (!MD5Util.encrypt(password).equals(user.getPassword())) throw new GKerLoveException("用户名或密码错误");
-        return JwtUtils.getToken(user);
+        return jwtUtils.getToken(user);
     }
 
     public void register(String username, String password, String email, String code) {

@@ -23,6 +23,9 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     @Resource
     UserService userService;
 
+    @Resource
+    JwtUtils jwtUtils;
+
 
     @Override
     public boolean preHandle(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) {
@@ -43,7 +46,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 ResponseUtil.out(response, R.error().code(R.ResultCode.UNAUTHENTICATED).message("未登录"));
                 return false;
             }
-            if (!JwtUtils.checkToken(token)) {
+            if (!jwtUtils.checkToken(token)) {
                 ResponseUtil.out(response, R.error().code(R.ResultCode.UNAUTHENTICATED).message("登录失效"));
                 return false;
             }
@@ -55,7 +58,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         for (Annotation[] annotations : parameterAnnotations) {
             for (Annotation annotation : annotations) {
                 if (annotation.annotationType() == CurrentUser.class) {
-                    User user = userService.getById(JwtUtils.getUserId(token));
+                    User user = userService.getById(jwtUtils.getUserId(token));
                     request.setAttribute("user", user);
                     return true;
                 }
