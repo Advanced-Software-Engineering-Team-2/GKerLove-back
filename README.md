@@ -1,24 +1,19 @@
-# Getting Started
+# GKerLove-back
+果壳之恋后端项目
 
-### Reference Documentation
-For further reference, please consider the following sections:
+## 运行
+启动SpringBoot项目即可。
 
-* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
-* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/3.0.12/maven-plugin/reference/html/)
-* [Create an OCI image](https://docs.spring.io/spring-boot/docs/3.0.12/maven-plugin/reference/html/#build-image)
-* [Spring Boot DevTools](https://docs.spring.io/spring-boot/docs/3.0.12/reference/htmlsingle/index.html#using.devtools)
-* [Spring Data MongoDB](https://docs.spring.io/spring-boot/docs/3.0.12/reference/htmlsingle/index.html#data.nosql.mongodb)
-* [Java Mail Sender](https://docs.spring.io/spring-boot/docs/3.0.12/reference/htmlsingle/index.html#io.email)
-* [Spring Data Redis (Access+Driver)](https://docs.spring.io/spring-boot/docs/3.0.12/reference/htmlsingle/index.html#data.nosql.redis)
-* [Spring Web](https://docs.spring.io/spring-boot/docs/3.0.12/reference/htmlsingle/index.html#web)
-* [Spring Configuration Processor](https://docs.spring.io/spring-boot/docs/3.0.12/reference/htmlsingle/index.html#appendix.configuration-metadata.annotation-processor)
+## 配置
 
-### Guides
-The following guides illustrate how to use some features concretely:
+项目使用了配置中心，为了方便，也可以删除掉bootstrap.yml，创建application.yml作为项目的配置文件，在配置文件中需要配置：
 
-* [Accessing Data with MongoDB](https://spring.io/guides/gs/accessing-data-mongodb/)
-* [Messaging with Redis](https://spring.io/guides/gs/messaging-redis/)
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/rest/)
+- 邮箱服务器的密码
+- redis的地址、端口、数据库编号、用户名、密码
+- mongodb的地址、端口、用户名、密码、认证数据库、数据库
+- 应用的JWT Secret，配置在JWT.appSecret键下
+- 阿里云OSS的访问keyID、keySecret、roleArn，配置在OSS.accesssKeyId、accessKeySecret、roleArn键下
 
+## 项目结构
+
+标准的SpringBoot项目，数据库交互使用MongoTemplate。
